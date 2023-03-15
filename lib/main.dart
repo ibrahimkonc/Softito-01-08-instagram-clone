@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/components/bottom_navbar.dart';
 
+import 'package:instagram_clone/components/timeline_appbar.dart';
+
+import 'package:instagram_clone/components/timeline_stories.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -12,9 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(scaffoldBackgroundColor: Colors.black),
       home: const HomePage(),
     );
   }
@@ -29,30 +31,29 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int pageIndex = 0;
-  List<Widget> get pages => const [
+  List<Widget> get pages => [
+        Scaffold(
+          appBar: TimelineAppbar(),
+          body: Column(children: [TimeLineStories()]),
+        ),
         Scaffold(
           body: Center(
-            child: Text("Sayfa 1"),
+            child: Text("Sayfa 2", style: TextStyle(color: Colors.white)),
           ),
         ),
         Scaffold(
           body: Center(
-            child: Text("Sayfa 2"),
+            child: Text("Sayfa 3", style: TextStyle(color: Colors.white)),
           ),
         ),
         Scaffold(
           body: Center(
-            child: Text("Sayfa 3"),
+            child: Text("Sayfa 4", style: TextStyle(color: Colors.white)),
           ),
         ),
         Scaffold(
           body: Center(
-            child: Text("Sayfa 4"),
-          ),
-        ),
-        Scaffold(
-          body: Center(
-            child: Text("Sayfa 5"),
+            child: Text("Sayfa 5", style: TextStyle(color: Colors.white)),
           ),
         ),
       ];
@@ -60,9 +61,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("İnstagram"),
-      ),
       body: pages[pageIndex],
       bottomNavigationBar: BottomNavbar(
         pageIndex: pageIndex,
