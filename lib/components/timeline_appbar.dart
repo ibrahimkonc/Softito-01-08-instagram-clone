@@ -12,10 +12,10 @@ class TimelineAppbar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.black,
       title: Padding(
-        padding: const EdgeInsets.only(left: 10, top: 10.0),
+        padding: const EdgeInsets.only(left: 5, top: 10.0),
         child: Image.asset(
           "assets/instagram.png",
-          height: 30,
+          height: 40,
           fit: BoxFit.fitHeight,
         ),
       ),
