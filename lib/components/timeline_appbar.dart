@@ -9,28 +9,26 @@ class TimelineAppbar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => Size.fromHeight(65);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Padding(
-          padding: const EdgeInsets.only(left: 10, top: 10.0),
-          child: Image.asset(
-            "assets/instagram.png",
-            height: 30,
-            fit: BoxFit.fitHeight,
-          ),
+    return AppBar(
+      backgroundColor: Colors.black,
+      title: Padding(
+        padding: const EdgeInsets.only(left: 10, top: 10.0),
+        child: Image.asset(
+          "assets/instagram.png",
+          height: 30,
+          fit: BoxFit.fitHeight,
         ),
-        actions: [
-          CustomIconButton(
-            icon: "assets/icons/add.png",
-            onPressed: () {},
-          ),
-          CustomIconButton(
-            icon: "assets/icons/message.png",
-            onPressed: () {},
-          )
-        ],
       ),
+      actions: [
+        CustomIconButton(
+          icon: "assets/icons/add.png",
+          onPressed: () {},
+        ),
+        CustomIconButton(
+          icon: "assets/icons/message.png",
+          onPressed: () {},
+        )
+      ],
     );
   }
 }
