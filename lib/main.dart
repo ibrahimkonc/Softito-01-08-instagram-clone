@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:instagram_clone/components/timeline_appbar.dart';
+
+import 'package:instagram_clone/components/timeline_stories.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,13 +11,11 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData.dark(),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
@@ -33,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: TimelineAppbar(),
       backgroundColor: Colors.black,
       body: Column(
-        children: [],
+        children: [TimeLineStories()],
       ),
     );
   }
