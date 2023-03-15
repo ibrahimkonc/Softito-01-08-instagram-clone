@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/components/bottom_navbar.dart';
-
+import 'package:instagram_clone/components/discovery_grid.dart';
 import 'package:instagram_clone/components/timeline_appbar.dart';
-
 import 'package:instagram_clone/components/timeline_stories.dart';
 
 void main() {
@@ -33,28 +32,21 @@ class _HomePageState extends State<HomePage> {
   int pageIndex = 0;
   List<Widget> get pages => [
         Scaffold(
-          appBar: TimelineAppbar(),
-          body: Column(children: [TimeLineStories()]),
+          appBar: const TimelineAppbar(),
+          body: Column(children: const [TimeLineStories()]),
         ),
-        Scaffold(
+        const DiscoveryGrid(),
+        const Scaffold(
           body: Center(
-            child: Text("Sayfa 2", style: TextStyle(color: Colors.white)),
-          ),
+              child: Text("Sayfa 3", style: TextStyle(color: Colors.white))),
         ),
-        Scaffold(
+        const Scaffold(
           body: Center(
-            child: Text("Sayfa 3", style: TextStyle(color: Colors.white)),
-          ),
+              child: Text("Sayfa 4", style: TextStyle(color: Colors.white))),
         ),
-        Scaffold(
+        const Scaffold(
           body: Center(
-            child: Text("Sayfa 4", style: TextStyle(color: Colors.white)),
-          ),
-        ),
-        Scaffold(
-          body: Center(
-            child: Text("Sayfa 5", style: TextStyle(color: Colors.white)),
-          ),
+              child: Text("Sayfa 5", style: TextStyle(color: Colors.white))),
         ),
       ];
 
