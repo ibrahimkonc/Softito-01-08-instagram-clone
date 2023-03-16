@@ -4,9 +4,17 @@ import 'package:instagram_clone/components/discovery_grid.dart';
 import 'package:instagram_clone/components/timeline_appbar.dart';
 import 'package:instagram_clone/components/timeline_stories.dart';
 import 'package:instagram_clone/screens/reels_screen.dart';
+import 'package:instagram_clone/providers/discovery_grid_provider.dart';
+import 'package:provider/provider.dart';
+
+import 'components/timeline_posts.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(
+      create: (context) => DiscoveryGridProvider(),
+    )
+  ], child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -35,7 +43,9 @@ class _HomePageState extends State<HomePage> {
   List<Widget> get pages => [
         Scaffold(
           appBar: const TimelineAppbar(),
-          body: Column(children: const [TimeLineStories()]),
+          body: Column(
+            children: const [TimelinePosts()],
+          ),
         ),
         const DiscoveryGrid(),
         const Scaffold(
