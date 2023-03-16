@@ -1,19 +1,18 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/components/custom_icon_button.dart';
-import 'package:instagram_clone/components/discovery_grid.dart';
 import 'package:instagram_clone/components/timeline_stories.dart';
+import 'package:provider/provider.dart';
 
-class TimelinePosts extends StatefulWidget {
+import '../providers/discovery_grid_provider.dart';
+
+class TimelinePosts extends StatelessWidget {
   const TimelinePosts({super.key});
 
   @override
-  State<TimelinePosts> createState() => _TimelinePostsState();
-}
-
-class _TimelinePostsState extends State<TimelinePosts> {
-  @override
   Widget build(BuildContext context) {
+    var discoveryProvider = Provider.of<DiscoveryGridProvider>(context);
+    discoveryProvider.getUser();
     return Expanded(
       child: SingleChildScrollView(
         child: Column(
@@ -24,72 +23,72 @@ class _TimelinePostsState extends State<TimelinePosts> {
               child: ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: imageList.length,
+                itemCount: discoveryProvider.users.length,
                 itemBuilder: (context, index) => Container(
+                  padding: EdgeInsets.symmetric(vertical: 7),
                   child: Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 2),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.all(5),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 2),
+                            child: Column(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topRight,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        Colors.purple,
+                                        Colors.pink,
+                                        Colors.orange
+                                      ],
+                                    ),
+                                  ),
+                                  child: Container(
+                                    margin: EdgeInsets.all(2),
+                                    width: 30,
+                                    height: 50,
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topRight,
-                                        end: Alignment.bottomRight,
-                                        colors: [
-                                          Colors.purple,
-                                          Colors.pink,
-                                          Colors.orange
-                                        ],
+                                      image: DecorationImage(
+                                        image: NetworkImage(discoveryProvider
+                                            .users[index].userAvatar
+                                            .toString()),
+                                        fit: BoxFit.cover,
                                       ),
                                     ),
-                                    child: Container(
-                                      margin: EdgeInsets.all(2),
-                                      width: 30,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                          image: NetworkImage(imageList[index]),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
+                                  ),
+                                )
+                              ],
                             ),
-                            SizedBox(
-                              width: 5,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 2),
+                            child: Text(
+                              discoveryProvider.users[index].username
+                                  .toString(),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 2),
-                              child: Text(
-                                "username",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                            new Spacer(),
-                            Icon(
-                              Icons.more_vert,
-                              color: Colors.white,
-                            ),
-                          ],
-                        ),
+                          ),
+                          new Spacer(),
+                          Icon(
+                            Icons.more_vert,
+                            color: Colors.white,
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: Image(image: NetworkImage(imageList[index])),
-                      ),
+                      Image(
+                          image: NetworkImage(discoveryProvider
+                              .users[index].userAvatar
+                              .toString())),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 3),
                         child: Row(
@@ -127,7 +126,8 @@ class _TimelinePostsState extends State<TimelinePosts> {
                         child: Row(
                           children: [
                             Text(
-                              "x like",
+                              "${discoveryProvider.users[index].likeCount} likes"
+                                  .toString(),
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
@@ -141,19 +141,18 @@ class _TimelinePostsState extends State<TimelinePosts> {
                           children: [
                             RichText(
                               text: TextSpan(
-                                  text: 'username',
+                                  text: discoveryProvider.users[index].username
+                                      .toString(),
                                   recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      print("username");
-                                    },
+                                    ..onTap = () {},
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold),
                                   children: [
                                     TextSpan(text: " "),
                                     TextSpan(
-                                        text:
-                                            "contentcontentcontentcontentcontentcontent",
+                                        text: discoveryProvider
+                                            .users[index].content,
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.normal))
