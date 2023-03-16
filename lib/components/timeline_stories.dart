@@ -58,7 +58,8 @@ class _TimeLineStoriesState extends State<TimeLineStories> {
                                       child: CircleAvatar(
                                         radius: 28,
                                         child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(50),
+                                          borderRadius:
+                                              BorderRadius.circular(50),
                                           child: Image.network(
                                               "https://media.licdn.com/dms/image/C4D03AQFp9sz7mgmKCA/profile-displayphoto-shrink_800_800/0/1649361367225?e=2147483647&v=beta&t=I3aIGywxu2l6XpPFzRobfzoXgO-sHO4Mly4Y2DQuUt8"),
                                         ),

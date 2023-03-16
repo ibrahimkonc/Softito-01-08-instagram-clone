@@ -21,12 +21,16 @@ class TimelineAppbar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         CustomIconButton(
-          icon: "assets/icons/add.png",
+          icon: "assets/icons/favorite.png",
           onPressed: () {},
+          height: 25,
+          width: 25,
         ),
         CustomIconButton(
           icon: "assets/icons/message.png",
           onPressed: () {},
+          height: 25,
+          width: 25,
         )
       ],
     );

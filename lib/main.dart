@@ -6,6 +6,8 @@ import 'package:instagram_clone/components/timeline_stories.dart';
 import 'package:instagram_clone/providers/discovery_grid_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'components/timeline_posts.dart';
+
 void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(
@@ -39,7 +41,9 @@ class _HomePageState extends State<HomePage> {
   List<Widget> get pages => [
         Scaffold(
           appBar: const TimelineAppbar(),
-          body: Column(children: const [TimeLineStories()]),
+          body: Column(
+            children: const [TimelinePosts()],
+          ),
         ),
         const DiscoveryGrid(),
         const Scaffold(
