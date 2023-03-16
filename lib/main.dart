@@ -3,9 +3,15 @@ import 'package:instagram_clone/components/bottom_navbar.dart';
 import 'package:instagram_clone/components/discovery_grid.dart';
 import 'package:instagram_clone/components/timeline_appbar.dart';
 import 'package:instagram_clone/components/timeline_stories.dart';
+import 'package:instagram_clone/providers/discovery_grid_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(
+      create: (context) => DiscoveryGridProvider(),
+    )
+  ], child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
