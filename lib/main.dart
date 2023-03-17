@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: true,
       title: 'Flutter Demo',
       theme: ThemeData(scaffoldBackgroundColor: Colors.black),
       home: const HomePage(),
@@ -54,7 +53,7 @@ class _HomePageState extends State<HomePage> {
               child: Text("Sayfa 3", style: TextStyle(color: Colors.white))),
         ),
         const VideoApp(),
-        ProfilePage(),
+        ProfilePage()
       ];
 
   @override

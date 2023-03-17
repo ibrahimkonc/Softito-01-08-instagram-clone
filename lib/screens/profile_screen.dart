@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 import '../components/custom_icon_button.dart';
+import '../components/single_post.dart';
 import '../providers/discovery_grid_provider.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -330,16 +331,30 @@ GridView _listGrid(DiscoveryGridProvider discoveryProvider) {
           mainAxisSpacing: 2),
       itemCount: discoveryProvider.users.length - 3,
       itemBuilder: (context, index) {
-        return Container(
-          decoration: const BoxDecoration(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.all(Radius.circular(15))),
-          child: ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(5)),
-            child: Image(
-              image: NetworkImage(
-                  discoveryProvider.users[index].userAvatar.toString()),
-              fit: BoxFit.cover,
+        return GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => SinglePost(
+                v1: discoveryProvider.users[index].username.toString(),
+                v2: discoveryProvider.users[index].userAvatar.toString(),
+                v3: discoveryProvider.users[index].likeCount!,
+                v4: discoveryProvider.users[index].username.toString(),
+                v5: discoveryProvider.users[index].content.toString(),
+                v6: discoveryProvider.users[index].userAvatar.toString(),
+              ),
+            ));
+          },
+          child: Container(
+            decoration: const BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.all(Radius.circular(15))),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(5)),
+              child: Image(
+                image: NetworkImage(
+                    discoveryProvider.users[index].userAvatar.toString()),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         );
