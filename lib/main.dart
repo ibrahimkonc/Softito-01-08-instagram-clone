@@ -3,6 +3,7 @@ import 'package:instagram_clone/components/bottom_navbar.dart';
 import 'package:instagram_clone/components/discovery_grid.dart';
 import 'package:instagram_clone/components/timeline_appbar.dart';
 import 'package:instagram_clone/components/timeline_stories.dart';
+import 'package:instagram_clone/screens/reels_screen.dart';
 import 'package:instagram_clone/providers/discovery_grid_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: true,
       title: 'Flutter Demo',
       theme: ThemeData(scaffoldBackgroundColor: Colors.black),
       home: const HomePage(),
@@ -47,16 +49,11 @@ class _HomePageState extends State<HomePage> {
         ),
         const DiscoveryGrid(),
         const Scaffold(
-          body: Center(
-              child: Text("Sayfa 3", style: TextStyle(color: Colors.white))),
+          body: Center(child: Text("Sayfa 3", style: TextStyle(color: Colors.white))),
         ),
+        const VideoApp(),
         const Scaffold(
-          body: Center(
-              child: Text("Sayfa 4", style: TextStyle(color: Colors.white))),
-        ),
-        const Scaffold(
-          body: Center(
-              child: Text("Sayfa 5", style: TextStyle(color: Colors.white))),
+          body: Center(child: Text("Sayfa 5", style: TextStyle(color: Colors.white))),
         ),
       ];
 
