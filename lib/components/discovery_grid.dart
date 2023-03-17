@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:instagram_clone/components/single_post.dart';
 import 'package:instagram_clone/providers/discovery_grid_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -119,19 +120,44 @@ class DiscoveryGrid extends StatelessWidget {
                       childrenDelegate: SliverChildBuilderDelegate(
                         childCount: discoveryProvider.users.length,
                         (context, index) {
-                          return Container(
-                            decoration: const BoxDecoration(
-                                color: Colors.transparent,
+                          return GestureDetector(
+                            onTap: () {
+                              //    discoveryProvider.users[1].username.toString(),
+// discoveryProvider.users[1].userAvatar.toString())),
+//      "${discoveryProvider.users[1].likeCount} likes"
+//discoveryProvider.users[1].username.toString(),
+//discoveryProvider.users[1].content,
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => SinglePost(
+                                  v1: discoveryProvider.users[index].username
+                                      .toString(),
+                                  v2: discoveryProvider.users[index].userAvatar
+                                      .toString(),
+                                  v3: discoveryProvider.users[index].likeCount!,
+                                  v4: discoveryProvider.users[index].username
+                                      .toString(),
+                                  v5: discoveryProvider.users[index].content
+                                      .toString(),
+                                  v6: discoveryProvider.users[index].userAvatar
+                                      .toString(),
+                                ),
+                              ));
+                            },
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                  color: Colors.transparent,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15))),
+                              child: ClipRRect(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(15))),
-                            child: ClipRRect(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(5)),
-                              child: FadeInImage.memoryNetwork(
-                                placeholder: kTransparentImage,
-                                image: discoveryProvider.users[index].userAvatar
-                                    .toString(),
-                                fit: BoxFit.cover,
+                                    const BorderRadius.all(Radius.circular(5)),
+                                child: FadeInImage.memoryNetwork(
+                                  placeholder: kTransparentImage,
+                                  image: discoveryProvider
+                                      .users[index].userAvatar
+                                      .toString(),
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                           );
