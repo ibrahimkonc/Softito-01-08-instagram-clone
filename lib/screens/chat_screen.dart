@@ -51,10 +51,11 @@ class ChatPage extends StatelessWidget {
           )
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Padding(
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
               padding: const EdgeInsets.symmetric(vertical: 6),
               child: TextField(
                 onTap: () {},
@@ -77,18 +78,16 @@ class ChatPage extends StatelessWidget {
                 ),
               ),
             ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Container(
+            Container(
+                margin: EdgeInsets.only(top: 20),
                 color: Colors.black,
-                height: 100,
+                height: 125,
                 child: Row(
                   children: [
                     Expanded(
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: 10,
+                        itemCount: discoveryProvider.users.length,
                         itemBuilder: (context, index) {
                           return SizedBox(
                             child: Padding(
@@ -102,34 +101,29 @@ class ChatPage extends StatelessWidget {
                                       print("dokundu $index");
                                     },
                                     child: Container(
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        gradient: LinearGradient(
-                                          //add colors to colors array
-                                          colors: index == 0
-                                              ? [Colors.green, Colors.green]
-                                              : [
-                                                  Colors.red,
-                                                  Colors.yellow,
-                                                ],
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                        ),
-                                      ),
                                       child: Padding(
                                         padding: const EdgeInsets.all(2.0),
                                         child: CircleAvatar(
                                           backgroundColor: Colors.black,
-                                          radius: 32,
+                                          radius: 42,
                                           child: CircleAvatar(
-                                            radius: 28,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
-                                              child: Image.network(
-                                                  "https://media.licdn.com/dms/image/C4D03AQFp9sz7mgmKCA/profile-displayphoto-shrink_800_800/0/1649361367225?e=2147483647&v=beta&t=I3aIGywxu2l6XpPFzRobfzoXgO-sHO4Mly4Y2DQuUt8"),
-                                            ),
-                                          ),
+                                              backgroundImage: NetworkImage(
+                                                  discoveryProvider
+                                                      .users[index].userAvatar
+                                                      .toString()),
+                                              radius: 48,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.all(10)),
+                                                color: Colors.amber,
+                                                padding: EdgeInsets.all(20),
+                                                child: Text(
+                                                  "Text",
+                                                  style: TextStyle(
+                                                      color: Colors.black),
+                                                ),
+                                              )),
                                         ),
                                       ),
                                     ),
@@ -139,8 +133,12 @@ class ChatPage extends StatelessWidget {
                                   ),
                                   FittedBox(
                                       child: Text(
-                                    index != 0 ? "m4ydin" : "Your story",
-                                    style: const TextStyle(color: Colors.white),
+                                    index == 0
+                                        ? "Bir Not Burak"
+                                        : discoveryProvider
+                                            .users[index].username
+                                            .toString(),
+                                    style: const TextStyle(color: Colors.grey),
                                   ))
                                 ],
                               ),
@@ -151,39 +149,37 @@ class ChatPage extends StatelessWidget {
                     )
                   ],
                 )),
-          ),
-          Expanded(
-            flex: 10,
-            child: ListView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: discoveryProvider.users.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                      leading: CircleAvatar(
-                        backgroundColor: Colors.black,
-                        radius: 32,
-                        child: CircleAvatar(
-                          radius: 30,
+            Flexible(
+              child: ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  padding: EdgeInsets.zero,
+                  itemCount: discoveryProvider.users.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                        leading: CircleAvatar(
+                          radius: 25,
                           backgroundImage: NetworkImage(discoveryProvider
                               .users[index].userAvatar
                               .toString()),
                         ),
-                      ),
-                      trailing: const Icon(
-                        Icons.close,
-                        color: Colors.grey,
-                        size: 17,
-                      ),
-                      subtitle: Text(
-                          discoveryProvider.users[index].subusername.toString(),
-                          style: const TextStyle(color: Colors.grey)),
-                      title: Text(
-                        discoveryProvider.users[index].username.toString(),
-                        style: const TextStyle(color: Colors.white),
-                      ));
-                }),
-          ),
-        ],
+                        trailing: const Icon(
+                          Icons.close,
+                          color: Colors.grey,
+                          size: 17,
+                        ),
+                        subtitle: Text(
+                            discoveryProvider.users[index].subusername
+                                .toString(),
+                            style: const TextStyle(color: Colors.grey)),
+                        title: Text(
+                          discoveryProvider.users[index].username.toString(),
+                          style: const TextStyle(color: Colors.white),
+                        ));
+                  }),
+            ),
+          ],
+        ),
       ),
     );
   }
