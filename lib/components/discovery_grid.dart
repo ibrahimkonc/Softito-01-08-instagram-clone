@@ -52,16 +52,17 @@ class DiscoveryGrid extends StatelessWidget {
                             style: const TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.all(-5.0),
-                              fillColor: Colors.grey,
+                              filled: true,
+                              fillColor: Color.fromARGB(255, 31, 31, 31),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15),
                                 borderSide:
-                                    const BorderSide(color: Colors.grey),
+                                    const BorderSide(color: Colors.black),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15),
                                 borderSide:
-                                    const BorderSide(color: Colors.white),
+                                    const BorderSide(color: Colors.black),
                               ),
                               hintText: "Ara",
                               hintStyle: const TextStyle(color: Colors.white),
