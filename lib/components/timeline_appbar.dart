@@ -1,4 +1,6 @@
+
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/components/notifications.dart';
 
 import 'custom_icon_button.dart';
 
@@ -22,7 +24,10 @@ class TimelineAppbar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         CustomIconButton(
           icon: "assets/icons/favorite.png",
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const Notifications()));
+          },
           height: 25,
           width: 25,
         ),
