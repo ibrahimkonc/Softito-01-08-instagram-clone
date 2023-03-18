@@ -12,6 +12,9 @@ class DiscoveryGridProvider with ChangeNotifier {
   FocusNode get getmyFocusNode => myFocusNode;
   List<UserModel> users = [];
 
+  final TextEditingController textController = TextEditingController();
+  TextEditingController get gettextController => textController;
+
   changetoFocus() {
     onFocus = true;
     notifyListeners();

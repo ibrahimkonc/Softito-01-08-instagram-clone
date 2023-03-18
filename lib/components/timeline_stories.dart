@@ -44,6 +44,7 @@ class _TimeLineStoriesState extends State<TimeLineStories> {
                                           ? [Colors.green, Colors.green]
                                           : [
                                               Colors.red,
+                                              Color.fromARGB(255, 244, 54, 203),
                                               Colors.yellow,
                                             ],
                                       begin: Alignment.topLeft,
