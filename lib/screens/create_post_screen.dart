@@ -1,181 +1,383 @@
+// ignore_for_file: avoid_print, unused_local_variable
+
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/providers/create_post_provider.dart';
+import 'package:photo_manager/photo_manager.dart';
 import 'package:provider/provider.dart';
-import 'package:transparent_image/transparent_image.dart';
-
 import '../providers/discovery_grid_provider.dart';
+import 'add_detail_post_screen.dart';
 
-class CreatePostScreen extends StatefulWidget {
-  const CreatePostScreen({super.key});
+
+class ImagePickerPage extends StatefulWidget {
+  const ImagePickerPage({super.key});
 
   @override
-  State<CreatePostScreen> createState() => _CreatePostScreenState();
+  State<ImagePickerPage> createState() => _ImagePickerPageState();
 }
 
-class _CreatePostScreenState extends State<CreatePostScreen> {
+class _ImagePickerPageState extends State<ImagePickerPage> {
+  bool isMultiple = false;
+  String? selectedFile;
+  File? imageCamera;
+  Uint8List? imageGallery;
+  List<Widget> imageList = [];
+  int currentPage = 0;
+  int? lastPage;
   @override
-  Widget build(BuildContext context) {
-    String? selectedFile;
-    var discoveryProvider = Provider.of<DiscoveryGridProvider>(context);
-    var createPostProvider = Provider.of<CreatePostProvider>(context);
+  void initState() {
+    super.initState();
+    fetchAllImages();
+  }
 
-    discoveryProvider.getUser();
+  handleScrollEvent(ScrollNotification scroll) {
+    if (scroll.metrics.pixels / scroll.metrics.maxScrollExtent <= .33) {
+      return;
+    }
+    if (lastPage == currentPage) {
+      return;
+    }
+    fetchAllImages();
+  }
 
-    final double h = MediaQuery.of(context).size.height;
-    final double w = MediaQuery.of(context).size.width;
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: const Text(
-          "New Post",
-          style: TextStyle(fontSize: 25),
-        ),
-        centerTitle: false,
-        leading: IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.close,
-              size: 35,
-              color: Color(0xff0066FF),
-            )),
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.arrow_forward,
-                size: 35,
-                color: Color(0xff0066FF),
-              ))
-        ],
-      ),
-      body: SafeArea(
-        child: CustomScrollView(
-          slivers: <Widget>[
-            SliverAppBar(
-              pinned: false,
-              snap: true,
-              floating: true,
-              toolbarHeight: w,
-              backgroundColor: Colors.blue,
-              actions: [
-                Expanded(
-                    child: Stack(
-                  children: [
-                    Container(
-                      alignment: Alignment.bottomLeft,
-                      color: Colors.transparent,
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0, left: 8),
-                        child: CircleAvatar(
-                          backgroundColor: const Color(0xff4B4B4B),
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: SvgPicture.asset("assets/icons/ic_resize.svg"),
+  fetchAllImages() async {
+    lastPage = currentPage;
+    final permission = await PhotoManager.requestPermissionExtend();
+    if (!permission.isAuth) {
+      return PhotoManager.openSetting();
+    }
+    final List<AssetPathEntity> albums = await PhotoManager.getAssetPathList(
+      onlyAll: true,
+      // ignore: todo
+      //TODO: video için bunu sil
+      // type: RequestType.image,
+    );
+    List<AssetEntity> photos =
+        await albums[0].getAssetListPaged(page: currentPage, size: 100);
+    List<Widget> temp = [];
+
+    for (AssetEntity asset in photos) {
+      temp.add(
+        FutureBuilder(
+            future: asset.thumbnailDataWithSize(
+              ThumbnailSize(asset.width, asset.height),
+            ),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return InkWell(
+                  onTap: () {
+                    setState(() {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        imageGallery = snapshot.data as Uint8List;
+                        imageCamera = null;
+                      }
+                    });
+                  },
+                  child: Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey, width: 1),
+                          image: DecorationImage(
+                            image: MemoryImage(snapshot.data as Uint8List),
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
-                    ),
-                    Container(
-                      child: Image.network(
-                        createPostProvider.selectedFile ??
-                            "https://media.licdn.com/dms/image/C4D03AQFp9sz7mgmKCA/profile-displayphoto-shrink_800_800/0/1649361367225?e=2147483647&v=beta&t=I3aIGywxu2l6XpPFzRobfzoXgO-sHO4Mly4Y2DQuUt8",
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ],
-                )),
-              ],
-            ),
-            SliverToBoxAdapter(
-                child: Column(
-              children: [
-                Container(
-                  height: h / 16,
-                  color: Colors.black,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: const [
-                          Text(
-                            "Gallery",
-                            style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),
-                          ),
-                          Icon(
-                            Icons.keyboard_arrow_down_rounded,
-                            color: Colors.white,
-                          )
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: const Color(0xff4B4B4B),
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: SvgPicture.asset("assets/icons/ic_multiple_photo.svg"),
+                      if (asset.type == AssetType.video)
+                        const Align(
+                          alignment: Alignment.bottomRight,
+                          child: Padding(
+                            padding: EdgeInsets.only(right: 5, bottom: 5),
+                            child: Icon(
+                              Icons.videocam,
+                              color: Colors.white,
                             ),
                           ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          CircleAvatar(
-                            backgroundColor: const Color(0xff4B4B4B),
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: SvgPicture.asset("assets/icons/ic_camera.svg"),
-                            ),
-                          ),
-                        ],
-                      )
+                        ),
                     ],
                   ),
-                ),
-                GridView.custom(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    gridDelegate: SliverQuiltedGridDelegate(
-                      pattern: [
-                        //ilk iki satır solda 4 tane 1x1, sağda 2 tane 2x1
-                        const QuiltedGridTile(1, 1),
-                        const QuiltedGridTile(1, 1),
-                        const QuiltedGridTile(1, 1),
-                      ],
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 2,
-                      mainAxisSpacing: 2,
+                );
+              } else {
+                return const SizedBox();
+              }
+            }),
+      );
+    }
+    setState(() {
+      imageList.addAll(temp);
+      currentPage++;
+    });
+  }
+
+  pickmageFromCamera() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.camera);
+      setState(() {
+        imageCamera = File(image!.path);
+        imageGallery = null;
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var discoveryProvider = Provider.of<DiscoveryGridProvider>(context);
+    var createPostProvider = Provider.of<CreatePostProvider>(context);
+    discoveryProvider.getUser();
+    final double h = MediaQuery.of(context).size.height;
+    final double w = MediaQuery.of(context).size.width;
+    final tranformController = TransformationController();
+
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          title: const Text(
+            "New Post",
+            style: TextStyle(fontSize: 20),
+          ),
+          centerTitle: false,
+          leading: IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.close,
+                size: 35,
+                color: Color(0xff0066FF),
+              )),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const AddDetailPostPage(),
                     ),
-                    childrenDelegate: SliverChildBuilderDelegate(
-                      childCount: discoveryProvider.users.length,
-                      (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            print("object:${discoveryProvider.users[index].userAvatar}");
-                            createPostProvider.changeSelectedFile(discoveryProvider.users[index].userAvatar.toString());
-                          },
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              color: Colors.transparent,
-                            ),
-                            child: ClipRRect(
-                              child: FadeInImage.memoryNetwork(
-                                placeholder: kTransparentImage,
-                                image: discoveryProvider.users[index].userAvatar.toString(),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    )),
-              ],
-            )),
+                  );
+                },
+                icon: const Icon(
+                  Icons.arrow_forward,
+                  size: 35,
+                  color: Color(0xff0066FF),
+                ))
           ],
         ),
-      ),
-    );
+        backgroundColor: Colors.black,
+        body: Column(
+          children: [
+            Expanded(
+              child: NotificationListener<ScrollNotification>(
+                  onNotification: (notification) {
+                    handleScrollEvent(notification);
+                    return true;
+                  },
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: CustomScrollView(
+                          slivers: [
+                            SliverAppBar(
+                              backgroundColor: Colors.transparent,
+                              pinned: false,
+                              snap: false,
+                              floating: true,
+                              toolbarHeight: w,
+                              actions: [
+                                Column(
+                                  children: [
+                                    Expanded(
+                                        child: Stack(
+                                      children: [
+                                        Container(
+                                          height: w,
+                                          width: w,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Colors.red, width: 1),
+                                            // image: imageCamera != null ||
+                                            //         imageGallery != null
+                                            //     ? DecorationImage(
+                                            //         fit: BoxFit.cover,
+                                            //         image: imageGallery != null
+                                            //             ? MemoryImage(imageGallery!)
+                                            //             : FileImage(imageCamera!)
+                                            //                 as ImageProvider,
+                                            //       )
+                                            //     : null,
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              Expanded(
+                                                // child: PhotoView(
+                                                //   imageProvider: imageCamera != null ||
+                                                //           imageGallery != null
+                                                //       ? imageGallery != null
+                                                //           ? MemoryImage(imageGallery!)
+                                                //           : FileImage(imageCamera!)
+                                                //               as ImageProvider
+                                                //       : const AssetImage(
+                                                //           "assets/images/placeholder.png"),
+                                                //   backgroundDecoration:
+                                                //       const BoxDecoration(
+                                                //     color: Colors.transparent,
+                                                //   ),
+                                                // ),
+                                                child: SizedBox(
+                                                  width: w,
+                                                  child: InteractiveViewer(
+                                                    transformationController:
+                                                        tranformController,
+                                                    minScale: 0.5,
+                                                    maxScale: 4,
+                                                    child: imageCamera !=
+                                                                null ||
+                                                            imageGallery != null
+                                                        ? imageGallery != null
+                                                            ? Image.memory(
+                                                                imageGallery!)
+                                                            : Image.file(
+                                                                imageCamera!)
+                                                        : const Image(
+                                                            image: AssetImage(
+                                                                "assets/instagram.png"),
+                                                          ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Positioned(
+                                          bottom: 0,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              tranformController.value =
+                                                  Matrix4.identity();
+                                            },
+                                            child: FittedBox(
+                                              fit: BoxFit.contain,
+                                              alignment: Alignment.bottomLeft,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    bottom: 8.0, left: 8),
+                                                child: CircleAvatar(
+                                                  backgroundColor:
+                                                      const Color(0xff4B4B4B),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            12.0),
+                                                    child: SvgPicture.asset(
+                                                        "assets/icons/ic_resize.svg"),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            SliverToBoxAdapter(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: h / 16,
+                                    color: Colors.black,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: const [
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Text(
+                                              "Gallery",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Icon(
+                                              Icons.keyboard_arrow_down_rounded,
+                                              color: Colors.white,
+                                            )
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  isMultiple = !isMultiple;
+                                                });
+                                              },
+                                              child: CircleAvatar(
+                                                backgroundColor: isMultiple
+                                                    ? const Color(0xff4B4B4B)
+                                                    : Colors.blue,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      10.0),
+                                                  child: SvgPicture.asset(
+                                                      "assets/icons/ic_multiple_photo.svg"),
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
+                                            InkWell(
+                                              onTap: () {
+                                                pickmageFromCamera();
+                                              },
+                                              child: CircleAvatar(
+                                                backgroundColor:
+                                                    const Color(0xff4B4B4B),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      10.0),
+                                                  child: SvgPicture.asset(
+                                                      "assets/icons/ic_camera.svg"),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SliverGrid(
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 3,
+                                        crossAxisSpacing: 2,
+                                        mainAxisSpacing: 2),
+                                delegate: SliverChildBuilderDelegate(
+                                  (BuildContext context, int index) {
+                                    return imageList[index];
+                                  },
+                                  childCount: imageList.length,
+                                )),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )),
+            ),
+          ],
+        ));
   }
 }

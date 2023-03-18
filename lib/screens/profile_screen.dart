@@ -1,9 +1,7 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 import '../components/custom_icon_button.dart';
 import '../components/single_post.dart';
@@ -159,7 +157,6 @@ class _ProfilePageState extends State<ProfilePage>
                               child: Container(
                                 margin: const EdgeInsets.all(4),
                                 child: ElevatedButton(
-                                  child: const Text('Profili Düzenle'),
                                   style: ElevatedButton.styleFrom(
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
@@ -173,6 +170,7 @@ class _ProfilePageState extends State<ProfilePage>
                                         fontWeight: FontWeight.bold),
                                   ),
                                   onPressed: () {},
+                                  child: const Text('Profili Düzenle'),
                                 ),
                               ),
                             ),
@@ -180,7 +178,6 @@ class _ProfilePageState extends State<ProfilePage>
                               child: Container(
                                 margin: const EdgeInsets.all(4),
                                 child: ElevatedButton(
-                                  child: const Text('Profili Paylaş'),
                                   style: ElevatedButton.styleFrom(
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
@@ -194,6 +191,7 @@ class _ProfilePageState extends State<ProfilePage>
                                         fontWeight: FontWeight.bold),
                                   ),
                                   onPressed: () {},
+                                  child: const Text('Profili Paylaş'),
                                 ),
                               ),
                             ),
@@ -322,10 +320,10 @@ class _ProfilePageState extends State<ProfilePage>
 
 GridView _listGrid(DiscoveryGridProvider discoveryProvider) {
   return GridView.builder(
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 200,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
           childAspectRatio: 1,
           crossAxisSpacing: 2,
           mainAxisSpacing: 2),

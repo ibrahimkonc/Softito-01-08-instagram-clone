@@ -32,9 +32,7 @@ class _TimeLineStoriesState extends State<TimeLineStories> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               GestureDetector(
-                                onTap: () {
-                                  print("dokundu $index");
-                                },
+                                onTap: () {},
                                 child: Container(
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,

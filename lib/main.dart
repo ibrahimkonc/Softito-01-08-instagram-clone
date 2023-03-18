@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(scaffoldBackgroundColor: Colors.black),
       home: const HomePage(),
@@ -52,7 +53,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         const DiscoveryGrid(),
-        const CreatePostScreen(),
+        const ImagePickerPage(),
         const VideoApp(),
         const ProfilePage()
       ];

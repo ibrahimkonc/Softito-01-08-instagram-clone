@@ -54,7 +54,7 @@ class DiscoveryGrid extends StatelessWidget {
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.all(-5.0),
                               filled: true,
-                              fillColor: Color.fromARGB(255, 31, 31, 31),
+                              fillColor: const Color.fromARGB(255, 31, 31, 31),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15),
                                 borderSide:
@@ -81,7 +81,7 @@ class DiscoveryGrid extends StatelessWidget {
             SliverToBoxAdapter(
               child: discoveryProvider.onFocus == false
                   ? GridView.custom(
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       padding: EdgeInsets.zero,
                       gridDelegate: SliverQuiltedGridDelegate(
@@ -191,7 +191,7 @@ class DiscoveryGrid extends StatelessWidget {
                           ),
                         ),
                         ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             padding: EdgeInsets.zero,
                             itemCount: discoveryProvider.users.length,

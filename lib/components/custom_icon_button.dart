@@ -15,7 +15,7 @@ class CustomIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 5.0, right: 15.0, top: 20.0),
+      padding: const EdgeInsets.only(left: 5.0, right: 15.0, top: 20.0),
       child: Align(
         alignment: Alignment.topCenter,
         child: GestureDetector(
