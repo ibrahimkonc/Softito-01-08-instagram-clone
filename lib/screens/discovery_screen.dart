@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:instagram_clone/components/discovery_search_tabs.dart';
 import 'package:instagram_clone/components/single_post.dart';
 import 'package:instagram_clone/providers/discovery_grid_provider.dart';
 import 'package:provider/provider.dart';
@@ -46,6 +47,7 @@ class DiscoveryGrid extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 6),
                           child: TextField(
+                            controller: discoveryProvider.textController,
                             focusNode: discoveryProvider.myFocusNode,
                             onTap: () {
                               discoveryProvider.changetoFocus();
@@ -122,11 +124,6 @@ class DiscoveryGrid extends StatelessWidget {
                         (context, index) {
                           return GestureDetector(
                             onTap: () {
-                              //    discoveryProvider.users[1].username.toString(),
-// discoveryProvider.users[1].userAvatar.toString())),
-//      "${discoveryProvider.users[1].likeCount} likes"
-//discoveryProvider.users[1].username.toString(),
-//discoveryProvider.users[1].content,
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => SinglePost(
                                   v1: discoveryProvider.users[index].username
@@ -187,6 +184,58 @@ class DiscoveryGrid extends StatelessWidget {
                                         color: Color.fromARGB(255, 54, 81, 255),
                                         fontSize: 18)),
                               ),
+                            ],
+                          ),
+                        ),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 8),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        DiscoverySearchTabs()));
+                          },
+                          child: Row(
+                            children: [
+                              MaterialButton(
+                                color: Color.fromARGB(255, 34, 34, 34),
+                                shape: const CircleBorder(),
+                                // ignore: sort_child_properties_last
+                                child: const Icon(
+                                  Icons.search,
+                                  size: 20,
+                                  color: Colors.white,
+                                ),
+                                padding: const EdgeInsets.all(15),
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              DiscoverySearchTabs()));
+                                },
+                              ),
+                              const Text(
+                                "Discovery Screen Tabs",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  alignment: Alignment.centerRight,
+                                  padding: const EdgeInsets.only(right: 13),
+                                  child: const Icon(
+                                    Icons.close,
+                                    color: Colors.grey,
+                                    size: 17,
+                                  ),
+                                ),
+                              )
                             ],
                           ),
                         ),
