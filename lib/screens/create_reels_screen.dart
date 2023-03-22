@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../components/custom_icon_button.dart';
 
-class CreateStoryPage extends StatelessWidget {
-  const CreateStoryPage({super.key});
+class CreateReelsScreen extends StatelessWidget {
+  const CreateReelsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +37,9 @@ class CreateStoryPage extends StatelessWidget {
                 ],
               ),
             ),
+            const SizedBox(
+              height: 50,
+            ),
             Expanded(
               child: Row(
                 children: [
@@ -44,13 +47,31 @@ class CreateStoryPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CustomIconButton(
-                        icon: "assets/icons/ic_Aa.png",
+                        icon: "assets/icons/ic_music.png",
                         onPressed: () {},
                         height: 25,
                         width: 25,
                       ),
                       CustomIconButton(
-                        icon: "assets/icons/ic_infinity.png",
+                        icon: "assets/icons/ic_stars.png",
+                        onPressed: () {},
+                        height: 25,
+                        width: 25,
+                      ),
+                      CustomIconButton(
+                        icon: "assets/icons/ic_leftarrow.png",
+                        onPressed: () {},
+                        height: 25,
+                        width: 25,
+                      ),
+                      CustomIconButton(
+                        icon: "assets/icons/ic_15sec.png",
+                        onPressed: () {},
+                        height: 25,
+                        width: 25,
+                      ),
+                      CustomIconButton(
+                        icon: "assets/icons/ic_1x.png",
                         onPressed: () {},
                         height: 25,
                         width: 25,
@@ -60,6 +81,12 @@ class CreateStoryPage extends StatelessWidget {
                         onPressed: () {},
                         height: 30,
                         width: 30,
+                      ),
+                      CustomIconButton(
+                        icon: "assets/icons/ic_alarm.png",
+                        onPressed: () {},
+                        height: 20,
+                        width: 20,
                       ),
                       CustomIconButton(
                         icon: "assets/icons/ic_bottom.png",

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/components/notifications.dart';
-import 'package:instagram_clone/components/single_post.dart';
 import 'package:instagram_clone/screens/chat_screen.dart';
 
 import 'custom_icon_button.dart';
