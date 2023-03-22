@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../screens/create_post_screen.dart';
+
 class BottomNavbar extends StatelessWidget {
   final int pageIndex;
   final Function(int value) onTap;
@@ -11,6 +13,7 @@ class BottomNavbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      
       backgroundColor: Colors.black,
       unselectedItemColor: Colors.grey,
       currentIndex: pageIndex,
@@ -32,10 +35,15 @@ class BottomNavbar extends StatelessWidget {
             ),
             label: ""),
         BottomNavigationBarItem(
-            icon: Icon(
-              Icons.add_box_outlined,
-              size: _buttonSize,
-            ),
+            icon: IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ImagePickerPage()));
+                },
+                icon: Icon(
+                  Icons.add_box_outlined,
+                  size: _buttonSize,
+                )),
             label: ""),
         BottomNavigationBarItem(
             icon: SvgPicture.asset(

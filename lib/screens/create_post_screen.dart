@@ -6,12 +6,12 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:instagram_clone/components/kaydir_dumen.dart';
 import 'package:instagram_clone/providers/create_post_provider.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:provider/provider.dart';
 import '../providers/discovery_grid_provider.dart';
 import 'add_detail_post_screen.dart';
-
 
 class ImagePickerPage extends StatefulWidget {
   const ImagePickerPage({super.key});
@@ -136,6 +136,7 @@ class _ImagePickerPageState extends State<ImagePickerPage> {
     final tranformController = TransformationController();
 
     return Scaffold(
+        extendBody: true,
         appBar: AppBar(
           backgroundColor: Colors.black,
           title: const Text(
@@ -144,7 +145,9 @@ class _ImagePickerPageState extends State<ImagePickerPage> {
           ),
           centerTitle: false,
           leading: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
               icon: const Icon(
                 Icons.close,
                 size: 35,
@@ -167,216 +170,214 @@ class _ImagePickerPageState extends State<ImagePickerPage> {
           ],
         ),
         backgroundColor: Colors.black,
-        body: Column(
+        body: Stack(
           children: [
-            Expanded(
-              child: NotificationListener<ScrollNotification>(
-                  onNotification: (notification) {
-                    handleScrollEvent(notification);
-                    return true;
-                  },
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: CustomScrollView(
-                          slivers: [
-                            SliverAppBar(
-                              backgroundColor: Colors.transparent,
-                              pinned: false,
-                              snap: false,
-                              floating: true,
-                              toolbarHeight: w,
-                              actions: [
-                                Column(
-                                  children: [
-                                    Expanded(
-                                        child: Stack(
+            Column(
+              children: [
+                Expanded(
+                  child: NotificationListener<ScrollNotification>(
+                      onNotification: (notification) {
+                        handleScrollEvent(notification);
+                        return true;
+                      },
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: CustomScrollView(
+                              slivers: [
+                                SliverAppBar(
+                                  backgroundColor: Colors.transparent,
+                                  pinned: false,
+                                  snap: false,
+                                  floating: true,
+                                  toolbarHeight: w,
+                                  actions: [
+                                    Column(
                                       children: [
-                                        Container(
-                                          height: w,
-                                          width: w,
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: Colors.red, width: 1),
-                                            // image: imageCamera != null ||
-                                            //         imageGallery != null
-                                            //     ? DecorationImage(
-                                            //         fit: BoxFit.cover,
-                                            //         image: imageGallery != null
-                                            //             ? MemoryImage(imageGallery!)
-                                            //             : FileImage(imageCamera!)
-                                            //                 as ImageProvider,
-                                            //       )
-                                            //     : null,
-                                          ),
-                                          child: Column(
-                                            children: [
-                                              Expanded(
-                                                // child: PhotoView(
-                                                //   imageProvider: imageCamera != null ||
-                                                //           imageGallery != null
-                                                //       ? imageGallery != null
-                                                //           ? MemoryImage(imageGallery!)
-                                                //           : FileImage(imageCamera!)
-                                                //               as ImageProvider
-                                                //       : const AssetImage(
-                                                //           "assets/images/placeholder.png"),
-                                                //   backgroundDecoration:
-                                                //       const BoxDecoration(
-                                                //     color: Colors.transparent,
-                                                //   ),
-                                                // ),
-                                                child: SizedBox(
-                                                  width: w,
-                                                  child: InteractiveViewer(
-                                                    transformationController:
-                                                        tranformController,
-                                                    minScale: 0.5,
-                                                    maxScale: 4,
-                                                    child: imageCamera !=
-                                                                null ||
-                                                            imageGallery != null
-                                                        ? imageGallery != null
-                                                            ? Image.memory(
-                                                                imageGallery!)
-                                                            : Image.file(
-                                                                imageCamera!)
-                                                        : const Image(
-                                                            image: AssetImage(
-                                                                "assets/instagram.png"),
-                                                          ),
-                                                  ),
-                                                ),
+                                        Expanded(
+                                            child: Stack(
+                                          children: [
+                                            Container(
+                                              height: w,
+                                              width: w,
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: Colors.red,
+                                                    width: 1),
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                        Positioned(
-                                          bottom: 0,
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              tranformController.value =
-                                                  Matrix4.identity();
-                                            },
-                                            child: FittedBox(
-                                              fit: BoxFit.contain,
-                                              alignment: Alignment.bottomLeft,
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    bottom: 8.0, left: 8),
-                                                child: CircleAvatar(
-                                                  backgroundColor:
-                                                      const Color(0xff4B4B4B),
+                                              child: Column(
+                                                children: [
+                                                  Expanded(
+                                                    child: SizedBox(
+                                                      width: w,
+                                                      child: InteractiveViewer(
+                                                        transformationController:
+                                                            tranformController,
+                                                        minScale: 0.5,
+                                                        maxScale: 4,
+                                                        child: imageCamera !=
+                                                                    null ||
+                                                                imageGallery !=
+                                                                    null
+                                                            ? imageGallery !=
+                                                                    null
+                                                                ? Image.memory(
+                                                                    imageGallery!)
+                                                                : Image.file(
+                                                                    imageCamera!)
+                                                            : const Image(
+                                                                image: AssetImage(
+                                                                    "assets/instagram.png"),
+                                                              ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Positioned(
+                                              bottom: 0,
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  tranformController.value =
+                                                      Matrix4.identity();
+                                                },
+                                                child: FittedBox(
+                                                  fit: BoxFit.contain,
+                                                  alignment:
+                                                      Alignment.bottomLeft,
                                                   child: Padding(
                                                     padding:
-                                                        const EdgeInsets.all(
-                                                            12.0),
-                                                    child: SvgPicture.asset(
-                                                        "assets/icons/ic_resize.svg"),
+                                                        const EdgeInsets.only(
+                                                            bottom: 8.0,
+                                                            left: 8),
+                                                    child: CircleAvatar(
+                                                      backgroundColor:
+                                                          const Color(
+                                                              0xff4B4B4B),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(12.0),
+                                                        child: SvgPicture.asset(
+                                                            "assets/icons/ic_resize.svg"),
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        ),
+                                          ],
+                                        )),
                                       ],
-                                    )),
+                                    ),
                                   ],
                                 ),
-                              ],
-                            ),
-                            SliverToBoxAdapter(
-                              child: Column(
-                                children: [
-                                  Container(
-                                    height: h / 16,
-                                    color: Colors.black,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: const [
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Text(
-                                              "Gallery",
-                                              style: TextStyle(
+                                SliverToBoxAdapter(
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        height: h / 16,
+                                        color: Colors.black,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: const [
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text(
+                                                  "Gallery",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Icon(
+                                                  Icons
+                                                      .keyboard_arrow_down_rounded,
                                                   color: Colors.white,
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold),
+                                                )
+                                              ],
                                             ),
-                                            Icon(
-                                              Icons.keyboard_arrow_down_rounded,
-                                              color: Colors.white,
+                                            Row(
+                                              children: [
+                                                InkWell(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      isMultiple = !isMultiple;
+                                                    });
+                                                  },
+                                                  child: CircleAvatar(
+                                                    backgroundColor: isMultiple
+                                                        ? const Color(
+                                                            0xff4B4B4B)
+                                                        : Colors.blue,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              10.0),
+                                                      child: SvgPicture.asset(
+                                                          "assets/icons/ic_multiple_photo.svg"),
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 5,
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    pickmageFromCamera();
+                                                  },
+                                                  child: CircleAvatar(
+                                                    backgroundColor:
+                                                        const Color(0xff4B4B4B),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              10.0),
+                                                      child: SvgPicture.asset(
+                                                          "assets/icons/ic_camera.svg"),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             )
                                           ],
                                         ),
-                                        Row(
-                                          children: [
-                                            InkWell(
-                                              onTap: () {
-                                                setState(() {
-                                                  isMultiple = !isMultiple;
-                                                });
-                                              },
-                                              child: CircleAvatar(
-                                                backgroundColor: isMultiple
-                                                    ? const Color(0xff4B4B4B)
-                                                    : Colors.blue,
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      10.0),
-                                                  child: SvgPicture.asset(
-                                                      "assets/icons/ic_multiple_photo.svg"),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                pickmageFromCamera();
-                                              },
-                                              child: CircleAvatar(
-                                                backgroundColor:
-                                                    const Color(0xff4B4B4B),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      10.0),
-                                                  child: SvgPicture.asset(
-                                                      "assets/icons/ic_camera.svg"),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                                SliverGrid(
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 3,
+                                            crossAxisSpacing: 2,
+                                            mainAxisSpacing: 2),
+                                    delegate: SliverChildBuilderDelegate(
+                                      (BuildContext context, int index) {
+                                        return imageList[index];
+                                      },
+                                      childCount: imageList.length,
+                                    )),
+                              ],
                             ),
-                            SliverGrid(
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 3,
-                                        crossAxisSpacing: 2,
-                                        mainAxisSpacing: 2),
-                                delegate: SliverChildBuilderDelegate(
-                                  (BuildContext context, int index) {
-                                    return imageList[index];
-                                  },
-                                  childCount: imageList.length,
-                                )),
-                          ],
-                        ),
-                      ),
-                    ],
-                  )),
+                          ),
+                        ],
+                      )),
+                ),
+              ],
             ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: const [
+                SizedBox(height: 50, child: CenteredPageView()),
+              ],
+            )
           ],
         ));
   }
