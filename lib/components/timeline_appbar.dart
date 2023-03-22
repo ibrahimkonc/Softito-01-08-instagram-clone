@@ -8,7 +8,7 @@ class TimelineAppbar extends StatelessWidget implements PreferredSizeWidget {
   const TimelineAppbar({super.key});
 
   @override
-  Size get preferredSize => Size.fromHeight(65);
+  Size get preferredSize => const Size.fromHeight(65);
   @override
   Widget build(BuildContext context) {
     return AppBar(

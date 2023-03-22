@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:instagram_clone/components/bottom_navbar.dart';
 import 'package:instagram_clone/screens/discovery_screen.dart';
 import 'package:instagram_clone/components/timeline_appbar.dart';
-import 'package:instagram_clone/components/timeline_stories.dart';
+import 'package:instagram_clone/providers/create_post_provider.dart';
+import 'package:instagram_clone/screens/create_post_screen.dart';
 import 'package:instagram_clone/screens/profile_screen.dart';
 import 'package:instagram_clone/screens/reels_screen.dart';
 import 'package:instagram_clone/providers/discovery_grid_provider.dart';
@@ -14,8 +15,11 @@ void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(
       create: (context) => DiscoveryGridProvider(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => CreatePostProvider(),
     )
-  ], child: MyApp()));
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -24,6 +28,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(scaffoldBackgroundColor: Colors.black),
       home: const HomePage(),
@@ -48,12 +53,9 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         const DiscoveryGrid(),
-        const Scaffold(
-          body: Center(
-              child: Text("Sayfa 3", style: TextStyle(color: Colors.white))),
-        ),
+        const ImagePickerPage(),
         const VideoApp(),
-        ProfilePage()
+        const ProfilePage()
       ];
 
   @override

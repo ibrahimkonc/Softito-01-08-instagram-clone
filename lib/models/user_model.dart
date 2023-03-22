@@ -27,14 +27,14 @@ class UserModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['username'] = this.username;
-    data['subusername'] = this.subusername;
-    data['userAvatar'] = this.userAvatar;
-    data['media'] = this.media;
-    data['likeCount'] = this.likeCount;
-    data['content'] = this.content;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['username'] = username;
+    data['subusername'] = subusername;
+    data['userAvatar'] = userAvatar;
+    data['media'] = media;
+    data['likeCount'] = likeCount;
+    data['content'] = content;
     return data;
   }
 }

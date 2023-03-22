@@ -1,9 +1,7 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 import '../components/custom_icon_button.dart';
 import '../components/single_post.dart';
@@ -176,7 +174,6 @@ class _ProfilePageState extends State<ProfilePage>
               child: Container(
                 margin: const EdgeInsets.all(4),
                 child: ElevatedButton(
-                  child: const Text('Profili Düzenle'),
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0)),
@@ -188,6 +185,7 @@ class _ProfilePageState extends State<ProfilePage>
                         fontWeight: FontWeight.bold),
                   ),
                   onPressed: () {},
+                  child: const Text('Profili Düzenle'),
                 ),
               ),
             ),
@@ -195,7 +193,6 @@ class _ProfilePageState extends State<ProfilePage>
               child: Container(
                 margin: const EdgeInsets.all(4),
                 child: ElevatedButton(
-                  child: const Text('Profili Paylaş'),
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0)),
@@ -207,6 +204,7 @@ class _ProfilePageState extends State<ProfilePage>
                         fontWeight: FontWeight.bold),
                   ),
                   onPressed: () {},
+                  child: const Text('Profili Paylaş'),
                 ),
               ),
             ),
@@ -321,7 +319,7 @@ class _ProfilePageState extends State<ProfilePage>
     return TabBar(
         controller: _tabController,
         onTap: (tabindex) {},
-        labelPadding: EdgeInsets.all(5),
+        labelPadding: const EdgeInsets.all(5),
         indicatorColor: Colors.grey,
         indicatorWeight: 1,
         padding: const EdgeInsets.all(4),

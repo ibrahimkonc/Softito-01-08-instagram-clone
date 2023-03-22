@@ -15,13 +15,13 @@ class ChatPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         leading: IconButton(
-          padding: EdgeInsets.only(top: 10),
-          icon:
-              Icon(Icons.arrow_back, color: Color.fromARGB(255, 255, 255, 255)),
+          padding: const EdgeInsets.only(top: 10),
+          icon: const Icon(Icons.arrow_back,
+              color: Color.fromARGB(255, 255, 255, 255)),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Padding(
-          padding: EdgeInsets.only(left: 0, top: 10.0),
+          padding: const EdgeInsets.only(left: 0, top: 10.0),
           child: ElevatedButton(
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -66,7 +66,7 @@ class ChatPage extends StatelessWidget {
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.all(-5.0),
                   filled: true,
-                  fillColor: Color.fromARGB(255, 31, 31, 31),
+                  fillColor: const Color.fromARGB(255, 31, 31, 31),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                     borderSide: const BorderSide(color: Colors.black),
@@ -82,7 +82,7 @@ class ChatPage extends StatelessWidget {
               ),
             ),
             Container(
-                margin: EdgeInsets.only(top: 20),
+                margin: const EdgeInsets.only(top: 20),
                 color: Colors.black,
                 height: 125,
                 child: Row(
@@ -102,9 +102,7 @@ class ChatPage extends StatelessWidget {
                                   Stack(
                                     children: [
                                       GestureDetector(
-                                        onTap: () {
-                                          print("dokundu $index");
-                                        },
+                                        onTap: () {},
                                         child: Padding(
                                           padding: const EdgeInsets.all(2.0),
                                           child: CircleAvatar(
@@ -121,14 +119,14 @@ class ChatPage extends StatelessWidget {
                                         ),
                                       ),
                                       Container(
-                                        margin: EdgeInsets.only(left: 10),
+                                        margin: const EdgeInsets.only(left: 10),
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(20),
-                                          color:
-                                              Color.fromARGB(239, 58, 58, 58),
+                                          color: const Color.fromARGB(
+                                              239, 58, 58, 58),
                                         ),
-                                        padding: EdgeInsets.symmetric(
+                                        padding: const EdgeInsets.symmetric(
                                             vertical: 5, horizontal: 12),
                                         child: Text(
                                           index == 0
@@ -136,7 +134,8 @@ class ChatPage extends StatelessWidget {
                                               : discoveryProvider
                                                   .users[index].username
                                                   .toString(),
-                                          style: TextStyle(color: Colors.white),
+                                          style: const TextStyle(
+                                              color: Colors.white),
                                         ),
                                       ),
                                     ],
@@ -163,7 +162,7 @@ class ChatPage extends StatelessWidget {
                   ],
                 )),
             Container(
-              padding: EdgeInsets.symmetric(vertical: 10),
+              padding: const EdgeInsets.symmetric(vertical: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -176,7 +175,7 @@ class ChatPage extends StatelessWidget {
                   ),
                   TextButton(
                     style: TextButton.styleFrom(
-                      textStyle: TextStyle(fontSize: 20),
+                      textStyle: const TextStyle(fontSize: 20),
                     ),
                     onPressed: null,
                     child: const Text("İstekler",
@@ -189,7 +188,7 @@ class ChatPage extends StatelessWidget {
             ),
             Flexible(
               child: ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   padding: EdgeInsets.zero,
                   itemCount: discoveryProvider.users.length,

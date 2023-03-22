@@ -18,14 +18,14 @@ class TimelinePosts extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TimeLineStories(),
+            const TimeLineStories(),
             Flexible(
               child: ListView.builder(
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: discoveryProvider.users.length,
                 itemBuilder: (context, index) => Container(
-                  padding: EdgeInsets.symmetric(vertical: 7),
+                  padding: const EdgeInsets.symmetric(vertical: 7),
                   child: Column(
                     children: [
                       Row(
@@ -35,7 +35,7 @@ class TimelinePosts extends StatelessWidget {
                             child: Column(
                               children: [
                                 Container(
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                     gradient: LinearGradient(
                                       begin: Alignment.topRight,
@@ -48,7 +48,7 @@ class TimelinePosts extends StatelessWidget {
                                     ),
                                   ),
                                   child: Container(
-                                    margin: EdgeInsets.all(2),
+                                    margin: const EdgeInsets.all(2),
                                     width: 30,
                                     height: 50,
                                     decoration: BoxDecoration(
@@ -65,7 +65,7 @@ class TimelinePosts extends StatelessWidget {
                               ],
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           Padding(
@@ -73,13 +73,13 @@ class TimelinePosts extends StatelessWidget {
                             child: Text(
                               discoveryProvider.users[index].username
                                   .toString(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
-                          new Spacer(),
-                          Icon(
+                          const Spacer(),
+                          const Icon(
                             Icons.more_vert,
                             color: Colors.white,
                           ),
@@ -111,7 +111,7 @@ class TimelinePosts extends StatelessWidget {
                               height: 23,
                               width: 23,
                             ),
-                            Spacer(),
+                            const Spacer(),
                             CustomIconButton(
                               icon: "assets/icons/save.png",
                               onPressed: () {},
@@ -128,7 +128,7 @@ class TimelinePosts extends StatelessWidget {
                             Text(
                               "${discoveryProvider.users[index].likeCount} likes"
                                   .toString(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -145,15 +145,15 @@ class TimelinePosts extends StatelessWidget {
                                       .toString(),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {},
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold),
                                   children: [
-                                    TextSpan(text: " "),
+                                    const TextSpan(text: " "),
                                     TextSpan(
                                         text: discoveryProvider
                                             .users[index].content,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.normal))
                                   ]),
